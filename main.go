@@ -81,7 +81,6 @@ func main() {
 	respLogger.DumpResponses = dumpHttp
 	respLogger.DumpErrors = dumpHttp
 
-	listen := ":8080"
 	log.Printf("proxy listening on http://%s", listen)
 	log.Fatal(http.ListenAndServe(listen, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !strings.HasPrefix(r.URL.Path, "/api/v1/query") {
