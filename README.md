@@ -24,6 +24,28 @@ Just add this proxy as an additional data source in your _templated_ Grafana
 dashboards and you can easily switch between direct and cached access to compare
 speed and quality.
 
+## Quickstart
+
+Clone, build, start and point Grafana to `localhost:9091` instead of `localhost:9090`
+(if Prometheus is running on localhost).
+
+```
+go build
+./promcache
+```
+
+## Flags
+
+| **Flag** | **Type** | Description |
+| -------- | -------- | ----------- |
+| `listen` | string   | Listen address. Default: `:9091`
+| `dir`    | string   | Cache dir. Implies `-disk`
+| `disk`   | bool     | Use disk cache. Default: `false`
+| `verbose` | bool    | Verbose output
+| `dumphttp` | bool   | Dump HTTP Request and Response headers
+| `upstream` | string | Upstream host to connect to
+| `duration` | int    | Forced cache duration. Default: `60`
+
 ## License
 
 MIT
