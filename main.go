@@ -63,6 +63,7 @@ func main() {
 		Director: func(r *http.Request) {
 			r.URL.Scheme = "http"
 			r.URL.Host = upstream
+			r.Host = r.URL.Host
 			if verbose {
 				fmt.Printf("UPSTREAM-REQUEST TO: %s\n", r.URL.String())
 			}
