@@ -8,7 +8,7 @@ dashboards.
 This repository contains a small HTTP proxy server to run alongside your
 Prometheus servers. By default it will listen on port 9091 and proxy all requests
 to `localhost:9090`. Any request staring with `/api/v1/query` will receive
-special threatment and get possibly cached. All other requests are passed
+special treatment and get possibly cached. All other requests are passed
 unaltered.
 
 All requests to `/api/v1/query` will be forcefully cached. The `Cache-Control`
