@@ -92,22 +92,27 @@ func main() {
 		r.Header.Del("Pragma")
 		r.Header.Del("Cache-Control")
 		val := r.URL.Query()
-		start, err := strconv.Atoi(val.Get("start"))
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			nStart := strconv.Itoa(start - (start % duration))
-			val.Set("start", nStart)
-		}
-		end, err := strconv.Atoi(val.Get("end"))
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			nEnd := strconv.Itoa(end - (end % duration) + duration)
-			val.Set("end", nEnd)
-		}
+		val.Set("start", roundTS(val.Get("start"), false))
+		val.Set("end", roundTS(val.Get("end"), true))
 		r.URL.RawQuery = val.Encode()
 
 		respLogger.ServeHTTP(w, r)
 	})))
+}
+
+func roundTS(ts string, up bool) string {
+	// if there is a subsecond part, remove it
+	if strings.Contains(ts, ".") {
+		ts = strings.Split(ts, ".")[0]
+	}
+	t, err := strconv.Atoi(ts)
+	if err != nil {
+		fmt.Printf("Failed to convert timestamp: %s\n", ts)
+		// if we can not convert it just keep as is.
+		return ts
+	}
+	if up {
+		return strconv.Itoa(t - (t % duration) + duration)
+	}
+	return strconv.Itoa(t - (t % duration))
 }
